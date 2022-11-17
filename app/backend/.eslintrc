@@ -1,0 +1,36 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-console": "warn",
+    "camelcase": "warn",
+    "max-lines-per-function": [
+      "error",
+      {
+        "max": 40,
+        "skipBlankLines": true,
+        "skipComments": true
+      }
+    ],
+    "max-len": [
+      "error",
+      100
+    ],
+    "complexity": [
+      "error",
+      5
+    ]
+  }
+}
