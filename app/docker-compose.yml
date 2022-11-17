@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  backend:
+    container_name: ngcash_backend
+    build: ./backend
+    working_dir: /backend
+    ports:
+      - 3999:3001
+    platform: linux/x86_64
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.1-alpine
+    container_name: ngcash_db
+    ports:
+      - 5999:5432
+    environment:
+      POSTGRES_PASSWORD: ngcash20Bras!l22
+      POSTGRES_DB: ngcash_db
+    restart: always
