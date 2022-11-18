@@ -18,6 +18,6 @@ services:
     ports:
       - 5999:5432
     environment:
-      POSTGRES_PASSWORD: ngcash20Bras!l22
-      POSTGRES_DB: ngcash_db
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_NAME}"
     restart: always
