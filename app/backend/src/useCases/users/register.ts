@@ -1,6 +1,7 @@
 import IUserRepository from "../../repositories/IUserRepository";
 import { ConflictError } from "../../helpers/api-errors";
 import { IUser } from "../../entities/interfaces/IUser";
+import { User } from "../../entities/User";
 
 export default class RegisterUser {
   private repository: IUserRepository;
@@ -9,7 +10,7 @@ export default class RegisterUser {
     this.repository = repository;
   }
 
-  execute = async (user: IUser): Promise<IUser | Error> => {
+  execute = async (user: IUser): Promise<User> => {
     const foundUser = await this.repository.findByName(user.username);
 
     if(foundUser){
