@@ -15,6 +15,12 @@ export class BadRequestError extends ApiError {
   }
 }
 
+export class ConflictError extends ApiError {
+  constructor(message: string){
+    super(message, StatusCodes.CONFLICT)
+  }
+}
+
 export class NotFoundError extends ApiError {
   constructor(message: string){
     super(message, StatusCodes.NOT_FOUND)
