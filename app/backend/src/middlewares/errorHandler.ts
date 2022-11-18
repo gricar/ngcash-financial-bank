@@ -9,7 +9,7 @@ const errorHandler = (
   _next: NextFunction
   ) => {
     const statusCode = err.statusCode ?? StatusCodes.INTERNAL_SERVER_ERROR;
-    const message = err.statusCode ?? 'Internal server error'
+    const message = err.message ?? 'Internal server error'
 
     return res.status(statusCode).json({ message });
 };
