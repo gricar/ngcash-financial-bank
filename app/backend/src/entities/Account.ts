@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Transaction } from './Transaction';
 @Entity('accounts')
 export class Account {
 
@@ -10,4 +10,10 @@ export class Account {
     default: 100,
   })
   balance: number;
+
+  @OneToMany(() => Transaction, (transaction) => transaction.debitedAccount)
+  debitedtransactions: Transaction[];
+
+  @OneToMany(() => Transaction, (transaction) => transaction.creditedAccount)
+  creditedtransactions: Transaction[];
 }
