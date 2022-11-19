@@ -9,7 +9,7 @@ import RegisterUser from '../useCases/users/register';
 class UsersController {
   private usersRepository: IUserRepository;
 
-  constructor(){
+  constructor() {
     this.usersRepository = new UserRepository();
   }
 
@@ -19,7 +19,7 @@ class UsersController {
     const newUser = await registerUserCase.execute(req.body);
 
     return res.status(StatusCodes.CREATED).json(newUser);
-  }
+  };
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     const getAllUserCase = new GetAllUsers(this.usersRepository);
@@ -27,7 +27,7 @@ class UsersController {
     const users = await getAllUserCase.execute();
 
     return res.status(StatusCodes.OK).json(users);
-  }
+  };
 
   public authenticate = async (req: Request, res: Response): Promise<Response> => {
     const loginCase = new LoginUser(this.usersRepository);
@@ -35,7 +35,7 @@ class UsersController {
     const token = await loginCase.execute(req.body);
 
     return res.status(StatusCodes.OK).json({ token });
-  }
+  };
 }
 
 export default new UsersController();

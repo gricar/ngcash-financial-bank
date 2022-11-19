@@ -2,7 +2,7 @@ import IUserRepository from '../../repositories/IUserRepository';
 import { NotFoundError, UnauthorizedError } from '../../helpers/api-errors';
 import { IUser } from '../../entities/interfaces/IUser';
 import { comparePassword } from '../../helpers/brcypt';
-import { generateToken } from '../../helpers/jwt';
+import TokenAuthentication from '../../helpers/jwt';
 
 export default class LoginUser {
   private repository: IUserRepository;
@@ -24,6 +24,6 @@ export default class LoginUser {
       throw new UnauthorizedError('Password not valid, try again.');
     }
 
-    return generateToken(foundUser.id);
+    return TokenAuthentication.generateToken(foundUser.id);
   };
 }
