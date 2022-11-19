@@ -10,4 +10,3 @@ const jwtConfig: SignOptions = {
 export const generateToken = (payload: string): string => {
   return jwt.sign({ payload }, JWT_SECRET, jwtConfig);
 };
-
