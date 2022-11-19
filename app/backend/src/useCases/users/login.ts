@@ -1,7 +1,7 @@
 import IUserRepository from '../../repositories/IUserRepository';
 import { NotFoundError, UnauthorizedError } from '../../helpers/api-errors';
 import { IUser } from '../../entities/interfaces/IUser';
-import { comparePassword } from '../../helpers/brcypt';
+import HashPassword from '../../helpers/brcypt';
 import TokenAuthentication from '../../helpers/jwt';
 
 export default class LoginUser {
@@ -18,7 +18,7 @@ export default class LoginUser {
       throw new NotFoundError('User does not exists!');
     }
 
-    const isLoginValid = await comparePassword(user.password, foundUser.password);
+    const isLoginValid = await HashPassword.comparePassword(user.password, foundUser.password);
 
     if (!isLoginValid) {
       throw new UnauthorizedError('Password not valid, try again.');

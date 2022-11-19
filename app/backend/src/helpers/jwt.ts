@@ -1,7 +1,5 @@
-import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { UnauthorizedError } from './api-errors';
-
-const JWT_SECRET = String(process.env.JWT_SECRET);
 
 class TokenAuthentication {
   private jwtConfig: SignOptions;
@@ -13,7 +11,7 @@ class TokenAuthentication {
       expiresIn: '24h',
       algorithm: 'HS256',
     };
-    this.jwtSecret = JWT_SECRET;
+    this.jwtSecret = String(process.env.JWT_SECRET);
   }
 
   public generateToken(payload: string): string {

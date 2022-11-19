@@ -1,14 +1,19 @@
 import bcrypt from 'bcrypt';
 
-const saltRounds = 10;
+class HashPassword {
+  private readonly saltRounds: number;
 
-export const generateHashPassword = async (password: string): Promise<string> => {
-  const hashPwd = await bcrypt.hash(password, saltRounds);
-  return hashPwd;
-};
+  constructor() {
+    this.saltRounds = 10;
+  }
 
+  public async generate(password: string): Promise<string> {
+    return bcrypt.hash(password, this.saltRounds);
+  }
 
-export const comparePassword = async (password: string, hashPwd: string): Promise<boolean> => {
-  const result = await bcrypt.compare(password, hashPwd);
-  return result;
-};
+  public async comparePassword(password: string, hashPwd: string): Promise<boolean> {
+    return bcrypt.compare(password, hashPwd);
+  }
+}
+
+export default new HashPassword();

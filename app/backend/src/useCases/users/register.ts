@@ -2,7 +2,7 @@ import IUserRepository from '../../repositories/IUserRepository';
 import { ConflictError } from '../../helpers/api-errors';
 import { IUser } from '../../entities/interfaces/IUser';
 import { User } from '../../entities/User';
-import { generateHashPassword } from '../../helpers/brcypt';
+import HashPassword from '../../helpers/brcypt';
 
 export default class RegisterUser {
   private repository: IUserRepository;
@@ -18,7 +18,7 @@ export default class RegisterUser {
       throw new ConflictError('User already exists!');
     }
 
-    const hashPwd = await generateHashPassword(user.password);
+    const hashPwd = await HashPassword.generate(user.password);
 
     user.password = hashPwd;
 
