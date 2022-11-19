@@ -19,9 +19,7 @@ class UsersController {
 
     const newUser = await registerUserCase.execute(req.body);
 
-    const { password, ...user } = newUser;
-
-    return res.status(StatusCodes.CREATED).json(user);
+    return res.status(StatusCodes.CREATED).json(newUser);
   };
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {

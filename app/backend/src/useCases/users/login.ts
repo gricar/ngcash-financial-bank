@@ -11,14 +11,14 @@ export default class LoginUser {
     this.repository = repository;
   }
 
-  execute = async (user: IUser): Promise<string> => {
-    const foundUser = await this.repository.findByName(user.username);
+  execute = async ({ username, password }: IUser): Promise<string> => {
+    const foundUser = await this.repository.findByName(username);
 
     if (!foundUser) {
       throw new NotFoundError('User does not exists!');
     }
 
-    const isLoginValid = await HashPassword.comparePassword(user.password, foundUser.password);
+    const isLoginValid = await HashPassword.comparePassword(password, foundUser.password);
 
     if (!isLoginValid) {
       throw new UnauthorizedError('Password not valid, try again.');
