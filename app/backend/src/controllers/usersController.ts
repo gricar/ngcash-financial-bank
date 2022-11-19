@@ -4,7 +4,6 @@ import IUserRepository from '../repositories/IUserRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import GetAllUsers from '../useCases/users/getAll';
 import GetUserById from '../useCases/users/getById';
-import LoginUser from '../useCases/users/login';
 import RegisterUser from '../useCases/users/register';
 
 class UsersController {
@@ -36,14 +35,6 @@ class UsersController {
     const user = await getByIdUserCase.execute(req.params.id);
 
     return res.status(StatusCodes.OK).json(user);
-  };
-
-  public authenticate = async (req: Request, res: Response): Promise<Response> => {
-    const loginCase = new LoginUser(this.usersRepository);
-
-    const token = await loginCase.execute(req.body);
-
-    return res.status(StatusCodes.OK).json({ token });
   };
 }
 
