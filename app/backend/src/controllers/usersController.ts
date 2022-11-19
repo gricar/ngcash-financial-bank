@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import IUserRepository from '../repositories/IUserRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import GetAllUsers from '../useCases/users/getAll';
+import GetUserById from '../useCases/users/getById';
 import LoginUser from '../useCases/users/login';
 import RegisterUser from '../useCases/users/register';
 
@@ -27,6 +28,14 @@ class UsersController {
     const users = await getAllUserCase.execute();
 
     return res.status(StatusCodes.OK).json(users);
+  };
+
+  public getById = async (req: Request, res: Response): Promise<Response> => {
+    const getByIdUserCase = new GetUserById(this.usersRepository);
+
+    const user = await getByIdUserCase.execute(req.params.id);
+
+    return res.status(StatusCodes.OK).json(user);
   };
 
   public authenticate = async (req: Request, res: Response): Promise<Response> => {

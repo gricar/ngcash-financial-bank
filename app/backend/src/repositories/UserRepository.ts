@@ -42,12 +42,16 @@ export class UserRepository implements IUserRepository {
     }
 
   }
+  
+  async find(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  async findById(id: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ id });
+  }
 
   async findByName(username: string): Promise<User | null> {
     return this.userRepository.findOneBy({ username });
-  }
-
-  async find(): Promise<User[]> {
-    return this.userRepository.find();
   }
 }
