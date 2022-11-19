@@ -1,4 +1,5 @@
-import jwt, { SignOptions } from 'jsonwebtoken';
+import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+import { UnauthorizedError } from './api-errors';
 
 const JWT_SECRET = String(process.env.JWT_SECRET);
 
@@ -9,7 +10,7 @@ class TokenAuthentication {
 
   constructor() {
     this.jwtConfig = {
-      expiresIn: '1d',
+      expiresIn: '24h',
       algorithm: 'HS256',
     };
     this.jwtSecret = JWT_SECRET;
@@ -17,6 +18,16 @@ class TokenAuthentication {
 
   public generateToken(payload: string): string {
     return jwt.sign({ payload }, this.jwtSecret, this.jwtConfig);
+  }
+
+  public validateToken(token: string): void {
+    try {
+      jwt.verify(token, this.jwtSecret);
+    } catch (err) {
+      if (err instanceof Error) {
+        throw new UnauthorizedError(err.message);
+      }
+    }
   }
 }
 
