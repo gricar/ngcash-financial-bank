@@ -8,5 +8,6 @@ const profile = Router();
 profile.use(auth);
 profile.get('/', profileController.getUser);
 profile.post('/money-transfer', validateTransaction, profileController.moneyTransfer);
+profile.get('/transactions', profileController.listTransactions);
 
 export default profile;
