@@ -9,7 +9,9 @@ const auth = (req: Request, _res: Response, next: NextFunction) => {
     throw new NotFoundError('Token not found');
   }
 
-  TokenAuthentication.validateToken(token);
+  const decode = TokenAuthentication.validateToken(token);
+
+  req.userId = decode?.payload;
 
   return next();
 };

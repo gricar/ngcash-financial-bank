@@ -1,4 +1,4 @@
-import jwt, { SignOptions } from 'jsonwebtoken';
+import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
 import { UnauthorizedError } from './api-errors';
 
 class TokenAuthentication {
@@ -18,9 +18,11 @@ class TokenAuthentication {
     return jwt.sign({ payload }, this.jwtSecret, this.jwtConfig);
   }
 
-  public validateToken(token: string): void {
+  public validateToken(token: string): string | JwtPayload | undefined {
     try {
-      jwt.verify(token, this.jwtSecret);
+      const decode = jwt.verify(token, this.jwtSecret);
+
+      return decode;
     } catch (err) {
       if (err instanceof Error) {
         throw new UnauthorizedError(err.message);

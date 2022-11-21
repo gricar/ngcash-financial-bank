@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { User } from '../entities/User';
 import IUserRepository from '../repositories/IUserRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import GetAllUsers from '../useCases/users/getAll';
