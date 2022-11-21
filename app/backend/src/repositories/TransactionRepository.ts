@@ -14,7 +14,8 @@ export class TransactionRepository implements ITransactionRepository {
     this.accountRepo = AppDataSource.getRepository(Account);
   }
   
-  async userDebiteds(debitedAcc: Account): Promise<Transaction[]> {
+  async userDebiteds(debitedAcc: Account, sortDate: string): Promise<Transaction[]> {
+
     return this.transactionRepo.find({
       where: {
         debitedAccount: debitedAcc,
@@ -27,10 +28,13 @@ export class TransactionRepository implements ITransactionRepository {
           id: true,
         },
       },
+      order: {
+        createdAt: sortDate ? 'ASC' : 'DESC',
+      },
     });
   }
 
-  async userCrediteds(creditedAcc: Account): Promise<Transaction[]> {
+  async userCrediteds(creditedAcc: Account, sortDate: string): Promise<Transaction[]> {
     return this.transactionRepo.find({
       where: {
         creditedAccount: creditedAcc,
@@ -42,6 +46,9 @@ export class TransactionRepository implements ITransactionRepository {
         debitedAccount: {
           id: true,
         },
+      },
+      order: {
+        createdAt:  sortDate ? 'ASC' : 'DESC',
       },
     });
   }

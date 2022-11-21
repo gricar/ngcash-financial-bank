@@ -12,16 +12,16 @@ export default class UsersTransactions {
     this.transactionsRepo = transactionsRepo;
   }
 
-  execute = async (id: string) => {
-    const userLogged = await this.userRepo.findById(id);
+  execute = async (id: string, sortDate: string) => {
+    const userLog = await this.userRepo.findById(id);
 
-    if (!userLogged) {
+    if (!userLog) {
       throw new NotFoundError('User not found!');
     }
 
-    const cashOutTransactions = await this.transactionsRepo.userDebiteds(userLogged.account);
+    const cashOutTransactions = await this.transactionsRepo.userDebiteds(userLog.account, sortDate);
 
-    const cashInTransactions = await this.transactionsRepo.userCrediteds(userLogged.account);
+    const cashInTransactions = await this.transactionsRepo.userCrediteds(userLog.account, sortDate);
 
     return { cashOutTransactions, cashInTransactions };    
   };

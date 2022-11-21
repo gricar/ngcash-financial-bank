@@ -45,13 +45,17 @@ class ProfileController {
   };
 
   public listTransactions = async (req: Request, res: Response): Promise<Response> => {
+    const { sortDate } = req.query;
+
     const transactionsBankingCase = new UsersTransactions(
       this.usersRepository, this.transactionsRepository,
     );
     
     const id = req.userId as User['id'];
 
-    const { cashOutTransactions, cashInTransactions } = await transactionsBankingCase.execute(id);
+    const transactions = await transactionsBankingCase.execute(id, sortDate as string);
+
+    const { cashOutTransactions, cashInTransactions } = transactions;
 
     return res.status(StatusCodes.OK).json({ cashOutTransactions, cashInTransactions });
   };
