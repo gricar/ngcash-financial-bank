@@ -49,7 +49,7 @@
 
   - Instale as dependências: `npm install`.
 
-  - Os contêineres estarão prontos e você poderá acessar o projeto em: http://localhost:3001
+  - Os contêineres estarão prontos e você poderá acessar o projeto em: http://localhost:3999
 
   - Para desligar os containers, utilize o script: `docker-compose down`
 </details>
