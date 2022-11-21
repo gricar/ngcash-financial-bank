@@ -15,7 +15,7 @@ export class UserRepository implements IUserRepository {
     this.accountRepository = AppDataSource.getRepository(Account);
   }
 
-  async create({ username, password }: IUser): Promise<User | undefined> {
+  async create({ username, password }: IUser): Promise<Partial<User> | undefined> {
 
     await this.userRepository.queryRunner?.startTransaction();
 
@@ -33,22 +33,44 @@ export class UserRepository implements IUserRepository {
       await this.userRepository.save(newUser);
 
       await this.userRepository.queryRunner?.commitTransaction();
-      return newUser;
 
+      const { id } = newUser;
+
+      return { id, username, account: newAccount };
     } catch (err) {
       await this.userRepository.queryRunner?.rollbackTransaction();
     } finally {
       await this.userRepository.queryRunner?.release();
     }
-
   }
   
   async find(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      select: {
+        id: true,
+        username: true,
+      },
+    });
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ id });
+    const teste =  this.userRepository.findOneOrFail({
+      where: {
+        id,
+      },
+      relations: {
+        account: true,
+      },
+      select:{
+        id: true,
+        username: true,
+        account: {
+          balance: true,
+        },
+      },
+    });
+
+    return teste;
   }
 
   async findByName(username: string): Promise<User | null> {

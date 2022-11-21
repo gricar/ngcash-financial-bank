@@ -11,7 +11,7 @@ export default class RegisterUser {
     this.repository = repository;
   }
 
-  execute = async (user: IUser): Promise<User | undefined> => {
+  execute = async (user: IUser): Promise<Partial<User> | undefined> => {
     const foundUser = await this.repository.findByName(user.username);
 
     if (foundUser) {

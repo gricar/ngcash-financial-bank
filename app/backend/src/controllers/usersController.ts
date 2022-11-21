@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { User } from '../entities/User';
 import IUserRepository from '../repositories/IUserRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import GetAllUsers from '../useCases/users/getAll';
@@ -32,9 +33,9 @@ class UsersController {
   public getById = async (req: Request, res: Response): Promise<Response> => {
     const getByIdUserCase = new GetUserById(this.usersRepository);
 
-    const user = await getByIdUserCase.execute(req.params.id);
+    const userFound = await getByIdUserCase.execute(req.params.id);
 
-    return res.status(StatusCodes.OK).json(user);
+    return res.status(StatusCodes.OK).json(userFound);
   };
 }
 
