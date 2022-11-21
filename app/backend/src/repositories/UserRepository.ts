@@ -54,7 +54,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findById(id: string): Promise<User | null> {
-    const teste =  this.userRepository.findOneOrFail({
+    return this.userRepository.findOne({
       where: {
         id,
       },
@@ -64,16 +64,18 @@ export class UserRepository implements IUserRepository {
       select:{
         id: true,
         username: true,
-        account: {
-          balance: true,
-        },
       },
     });
-
-    return teste;
   }
 
   async findByName(username: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ username });
+    return this.userRepository.findOne({
+      where: {
+        username,
+      },
+      relations: {
+        account: true,
+      },
+    });
   }
 }
